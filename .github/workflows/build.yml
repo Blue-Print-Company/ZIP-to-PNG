@@ -1,7 +1,4 @@
-# This workflow will upload a Python Package using Twine when a release is created
-# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
-
-name: Upload Python Package
+name: Build
 
 on: [push]
 
@@ -16,15 +13,18 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-    - name: Install dependencies
+    - name: Build
       run: |
        pip install pyinstaller
        pyinstaller pack.py --onefile
+       ls
+       cd dist
+       ls
     - name: Upload
       uses: svenstaro/upload-release-action@v2
       with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/pack.exe
+          file: dist\pack.exe
           tag: "Stable"
           release_name: "Auto Release"
           overwrite: true
