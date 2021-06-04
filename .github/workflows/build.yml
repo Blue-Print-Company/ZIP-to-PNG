@@ -3,30 +3,7 @@ name: Build
 on: [push]
 
 jobs:
-  Build-Win:
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Build
-      run: |
-       pip install pyinstaller
-       pyinstaller pack.py --onefile
-    - name: Upload
-      uses: svenstaro/upload-release-action@v2
-      with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist\pack.exe
-          asset_name: pack-win.exe
-          tag: "Stable"
-          release_name: "Auto Release"
-          overwrite: true
-          body: "Automatic Release"
-  build-test:
+  Build:
     name: Build for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
