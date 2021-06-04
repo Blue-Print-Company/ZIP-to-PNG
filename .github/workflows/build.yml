@@ -27,7 +27,7 @@ jobs:
           overwrite: true
           body: "Automatic Release"
   build-test:
-    name: Publish for ${{ matrix.os }}
+    name: Build for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -56,7 +56,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/${{ matrix.artifact_name }}
+        file: dist/${{ matrix.artifact_name }}
         asset_name: ${{ matrix.asset_name }}
         release_name: "Stable"
         tag: "Stable"
