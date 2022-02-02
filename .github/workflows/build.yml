@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   Build:
+    needs: ["Clean"]
     name: Build for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -21,13 +22,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Cleaning
-      uses: dev-drprasad/delete-tag-and-release@v0.2.0
-      with:
-        delete_release: true # default: false
-        tag_name: Stable # tag name to delete
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -45,3 +39,13 @@ jobs:
         release_name: "Stable"
         tag: "Stable"
         body: "Automatic Release"
+  Clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleaning
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true # default: false
+          tag_name: Stable # tag name to delete
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
