@@ -6,7 +6,7 @@ PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 
 if len(sys.argv) != 4:
 	print(f"USAGE: {sys.argv[0]} cover.png content.bin output.png")
-	exit()
+	sys.exit()
 
 # this function is gross
 def fixup_zip(data, start_offset):
@@ -78,7 +78,7 @@ while True:
 		idat_body += content_in.read()
 		
 		if len(idat_body) > width * height:
-			exit("ERROR: Input files too big for cover image resolution.")
+			sys.exit()
 		
 		# if its a zip file, fix the offsets
 		if sys.argv[2].endswith(".zip"):
